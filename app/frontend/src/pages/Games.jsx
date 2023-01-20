@@ -39,7 +39,7 @@ const Games = () => {
             (isAdm)
               ? <AddNewMatchBtn />
               : null
-          }
+           }
         </div>
         <GamesTable currentFilter={ currentFilter } isAdm={ isAdm } />
       </section>

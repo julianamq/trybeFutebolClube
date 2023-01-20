@@ -1,6 +1,9 @@
-FROM node:14
-
-WORKDIR /app
+# FROM node:16.14-alpine
+# WORKDIR /app-frontend
+#  ...
+FROM node:16.14-alpine
+COPY package* ./
+WORKDIR /app-frontend
 RUN npm install
 COPY . .
 
