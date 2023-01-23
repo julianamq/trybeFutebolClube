@@ -2,7 +2,7 @@
 # WORKDIR /app-frontend
 #  ...
 FROM node:16.14-alpine
-COPY package* ./
+# COPY package* ./
 WORKDIR /app-frontend
 RUN npm install
 COPY . .
