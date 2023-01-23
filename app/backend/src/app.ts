@@ -1,11 +1,12 @@
 import * as express from 'express';
+import LoginRouter from './LoginRouter';
 
 class App {
   public app: express.Express;
 
   constructor() {
     this.app = express();
-    // this.routes(); // iniciando a 3
+    this.app.use('/login', LoginRouter); // iniciando a 3
 
     this.config();
 

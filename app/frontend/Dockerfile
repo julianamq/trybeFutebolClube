@@ -1,11 +1,8 @@
-# FROM node:16.14-alpine
-# WORKDIR /app-frontend
-#  ...
 FROM node:16.14-alpine
-# COPY package* ./
 WORKDIR /app-frontend
-COPY . .
+COPY package.json .
+COPY package-lock.json .
 RUN npm install
-
-#EXPOSE 3000
-CMD ["npm", "start"]
+COPY . .
+EXPOSE 3000
+CMD [ "npm", "start" ]
