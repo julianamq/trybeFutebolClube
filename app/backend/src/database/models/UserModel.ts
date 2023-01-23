@@ -5,6 +5,7 @@ class User extends Model {
   declare email: string;
   declare password: string;
   declare name: string;
+  declare role: string;
 }
 
 User.init({
@@ -15,6 +16,10 @@ User.init({
     autoIncrement: true,
   },
   password: {
+    type: STRING,
+    allowNull: false,
+  },
+  role: {
     type: STRING,
     allowNull: false,
   },
