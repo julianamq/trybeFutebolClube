@@ -4,8 +4,8 @@
 FROM node:16.14-alpine
 # COPY package* ./
 WORKDIR /app-frontend
-RUN npm install
 COPY . .
+RUN npm install
 
 #EXPOSE 3000
 CMD ["npm", "start"]
