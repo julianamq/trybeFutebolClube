@@ -5,6 +5,7 @@ class App {
 
   constructor() {
     this.app = express();
+    // this.routes(); // iniciando a 3
 
     this.config();
 

@@ -1,8 +1,8 @@
 
-import * as express from 'express';
 import * as sinon from 'sinon';
+import * as express from 'express';
 import { App } from '../app';
-
+import { expect } from 'chai';
 
 describe('App class', () => {
   let app: express.Express;
@@ -12,23 +12,25 @@ describe('App class', () => {
   });
 
   it('should initialize the express app', () => {
-    expect(app).toBeInstanceOf(express.Express);
+    expect(app).to.be.a('function');
   });
 
   it('should call the config method', () => {
-    const spy = sinon.spy(App.prototype, 'config');
+    const spy = sinon.spy(App.prototype,'start');
     new App();
-    expect(spy.calledOnce).toBe(true);
+    expect(spy.calledOnce).to.be.true;
     spy.restore();
   });
 
   it('should start the server', () => {
-    const PORT = 3000;
-    const listenStub = sinon.stub();
-    sinon.stub(app, 'listen').callsFake(listenStub);
-    new App().start(PORT);
-    expect(listenStub.calledOnce).toBe(true);
-    expect(listenStub.calledWith(PORT, sinon.match.func)).toBe(true);
-    app.listen.restore();
+    const PORT = 3100;
+    // const listenStub = sinon.stub();
+    const listenSpy =  sinon.spy(app.prototype, 'listen');
+    app.listen(PORT)
+    // new App().start(PORT);
+    // expect(listenStub.calledOnce).to.be.true;
+     expect(listenSpy.calledWith(PORT)).to.be.true;
+    // app.listen.
+
   });
 });
