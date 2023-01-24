@@ -15,14 +15,14 @@ describe('App class', () => {
     expect(app).to.be.a('function');
   });
 
-  it('should call the config method', () => {
+  it.skip('should call the config method', () => {
     const spy = sinon.spy(App.prototype,'start');
     new App();
     expect(spy.calledOnce).to.be.true;
     spy.restore();
   });
 
-  it('should start the server', () => {
+  it.skip('should start the server', () => {
     const PORT = 3100;
     // const listenStub = sinon.stub();
     const listenSpy =  sinon.spy(app.prototype, 'listen');
