@@ -1,16 +1,36 @@
-import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
+import * as dotenv from 'dotenv';
+import { SignOptions } from 'jsonwebtoken';
+import { NextFunction, Request, Response } from 'express';
+import { InterfaceToken } from '../interfaces/Interface';
 
-export default async (req: Request, res: Response, next: NextFunction) => {
-  const auth = req.header('Authorization');
-
-  try {
-    const key = jwt.verify(auth as string, process.env.JWT_SECRET as string);
-
-    req.body.user = key;
-
-    next();
-  } catch (error) {
-    return res.status(401).json({ message: 'Token must be a valid token' });
+dotenv.config();
+const validateLogin = (req: Request, res: Response, next: NextFunction) => {
+  const userValidate = req.body;
+  if (!userValidate.email || !userValidate.password) {
+    return res.status(400).json({ message: 'All fields must be filled' });
   }
+  return next();
 };
+
+const secret = process.env.JWT_SECRET || 'suaSenha';
+
+const jwtConfig: SignOptions = {
+  algorithm: 'HS256',
+  expiresIn: '1d',
+};
+const createToken = (loginWithoutPassword: InterfaceToken) => {
+  const token = jwt.sign({ data: loginWithoutPassword }, secret, jwtConfig);
+  return token;
+};
+
+const validateToken = (req: Request, res: Response, next: NextFunction) => {
+  const { authorization } = req.headers;
+  const token = authorization;
+  jwt.verify(token as string, secret, (error, data) => {
+    if (error) return res.status(400).json({ message: 'Token not found' });
+    req.body.user = data;
+    next();
+  });
+};
+export { createToken, validateToken, validateLogin };

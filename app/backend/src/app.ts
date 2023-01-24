@@ -6,12 +6,12 @@ class App {
 
   constructor() {
     this.app = express();
-    this.app.use('/login', LoginRouter); // iniciando a 3
 
     this.config();
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+    this.app.use('/login', LoginRouter); // iniciando a 3
   }
 
   private config():void {

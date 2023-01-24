@@ -23,7 +23,7 @@ User.init({
     type: STRING,
     allowNull: false,
   },
-  name: {
+  username: {
     type: STRING,
     allowNull: false,
   },
