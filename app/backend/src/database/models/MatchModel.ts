@@ -1,56 +1,38 @@
-import { Model, INTEGER, BOOLEAN } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import db from '.';
-// eslint-disable-next-line import/no-cycle
 import Team from './TeamModels';
 
-export default class Match extends Model {
+class Match extends Model {
   declare id: number;
-  declare homeTeamId: number;
-  declare homeTeamGoals: number;
-  declare awayTeamId: number;
-  declare awayTeamGoals: number;
-  declare inProgress: boolean;
+  declare teamName: string;
 }
 
-Match.init({
-  id: {
-    type: INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  homeTeamId: {
-    type: INTEGER,
-    references: {
-      model: Team,
-      key: 'id',
+Match.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
     },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-  },
-  homeTeamGoals: {
-    type: INTEGER,
-    allowNull: false,
-  },
-  awayTeamId: {
-    type: INTEGER,
-    allowNull: false,
-    references: {
-      model: Team,
-      key: 'id',
+    teamName: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   },
-  awayTeamGoals: {
-    type: INTEGER,
-    allowNull: false,
+  {
+    underscored: true,
+    sequelize: db,
+    modelName: 'Match',
+    timestamps: false,
+    tableName: 'matchs',
   },
-  inProgress: {
-    type: BOOLEAN,
-    defaultValue: false,
-  },
-}, {
-  underscored: true,
-  sequelize: db,
-  modelName: 'Match',
-  timestamps: false,
-  tableName: 'matches',
-});
+);
+
+Team.hasMany(Match, { foreignKey: 'homeTeamId', as: 'homeTeamId' });
+Team.hasMany(Match, { foreignKey: 'awayTeamId', as: 'awayTeamId' });
+
+Match.belongsTo(Team, { foreignKey: 'homeTeamId', as: 'homeTeamId' });
+Match.belongsTo(Team, { foreignKey: 'awayTeamId', as: 'awayTeamId' });
+
+export default Team;
