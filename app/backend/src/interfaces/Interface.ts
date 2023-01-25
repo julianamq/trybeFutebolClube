@@ -15,4 +15,5 @@ interface InterfaceToken {
   vocation: string,
   level: number,
 }
+
 export { InterfaceLogin, InterfaceValidate, InterfaceToken };
