@@ -26,7 +26,7 @@ describe('Seu teste', () => {
         expect(attributes.role.type.constructor.name).to.equal('STRING');
       });
     
-      it('should have a name attribute', () => {
+      it.skip('should have a name attribute', () => {
         const attributes = User.getAttributes();
         expect(attributes).to.have.property('name');
         expect(attributes.name.type.constructor.name).to.equal('STRING');

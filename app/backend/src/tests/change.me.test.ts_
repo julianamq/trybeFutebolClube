@@ -33,7 +33,7 @@ describe('Seu teste', () => {
 
   // it('...', async () => {
   //   chaiHttpResponse = await chai
-  //      .request(app)
+  //      .request(app).post('/login').send(e oque quero mandar no body tipo email password)
   //      ...
 
   //   expect(...)

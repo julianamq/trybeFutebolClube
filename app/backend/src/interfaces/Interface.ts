@@ -15,5 +15,11 @@ interface InterfaceToken {
   vocation: string,
   level: number,
 }
-
-export { InterfaceLogin, InterfaceValidate, InterfaceToken };
+interface IToken {
+  id: number;
+  email: string;
+  username: string;
+  role: string;
+  passwor: string;
+}
+export { InterfaceLogin, InterfaceValidate, InterfaceToken, IToken };
