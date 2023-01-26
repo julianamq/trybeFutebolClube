@@ -1,8 +1,27 @@
 import { Request, Response, NextFunction } from 'express';
-
+import TeamService from '../service/TeamService';
 import MatchesService from '../service/MatchesService';
 
 export default class MatchController {
+  static async createMatches(req: Request, res: Response) {
+    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+    const data = {
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals: +homeTeamGoals,
+      awayTeamGoals: +awayTeamGoals,
+    };
+    const dataTeamsHome = await TeamService.getById(homeTeamId);
+    const dataTeamsAway = await TeamService.getById(awayTeamId);
+
+    if (dataTeamsHome.message === 'Team not found' || dataTeamsAway.message === 'Team not found') {
+      return res.status(404).json({ message: 'There is no team with such id!' });
+    }
+    const { message } = await MatchesService.createMatches(data);
+    return res.status(201).json(message);
+  }
+
+  // ajuda Ewerton
   static async getAllMatches(req: Request, res: Response) {
     if (req.query.inProgress) return MatchController.getMatchByQuery(req, res);
     const get = await MatchesService.getAllMatches();

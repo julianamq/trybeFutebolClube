@@ -33,4 +33,12 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
     next();
   });
 };
+
+export const validateMatches = (req: Request, _res: Response, next: NextFunction) => {
+  const { homeTeamId, awayTeamId } = req.body;
+  if (homeTeamId === awayTeamId) {
+    return { message: 'It is not possible to create a match with two equal teams' };
+  }
+  return next();
+};
 export { createToken, validateToken, validateLogin };

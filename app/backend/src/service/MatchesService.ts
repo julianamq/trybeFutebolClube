@@ -1,9 +1,25 @@
+import { IMatch } from '../interfaces/InterfacesMatch';
 import { TypeMatchesWithTeams } from '../middelwares/types';
 import Match from '../database/models/MatchModel';
 import Team from '../database/models/TeamModels';
 import Declined from '../declined/declined';
 
 export default class MatchesService {
+  static async createMatches(data: IMatch) {
+    const { awayTeamId, homeTeamId } = data;
+    const homeTeam = await Match.findOne({ where: { id: homeTeamId } });
+    const awayTeam = await Match.findOne({ where: { id: awayTeamId } });
+    // console.log(homeTeam);
+    if (!homeTeam || !awayTeam) {
+      return { type: 'NOT_FOUND', message: 'There is no team with such id' };
+    }
+    const createdMatch = await Match.create({
+      ...data,
+      inProgress: true,
+    });
+    return { type: null, message: createdMatch };
+  }
+
   static async getAll() {
     const Matches = await Match.findAll();
     return Matches;
