@@ -63,7 +63,7 @@ describe("Seção 1-1 Testando a rota POST /login", () => {
 
   describe("3- Testar com um password inválido", () => {
     beforeEach(() => { 
-      sinon.stub(Model, 'findOne').resolves(IToken as User);
+      sinon.stub(Model, 'findOne').resolves();
       sinon.stub(bcrypt, 'compareSync').resolves(false);
     });
     afterEach(() => sinon.restore());
@@ -76,7 +76,7 @@ describe("Seção 1-1 Testando a rota POST /login", () => {
 
   describe("4- Testar com login feito com sucesso", () => {
     beforeEach(() => {
-      sinon.stub(Model, 'findOne').resolves(IToken as User);
+      sinon.stub(Model, 'findOne').resolves();
       sinon.stub(bcrypt, 'compareSync').resolves(true);
       sinon.stub(jwt, 'sign').resolves(VALID_TOKEN);
     });
@@ -94,7 +94,7 @@ describe("Seção 1-1 Testando a rota POST /login", () => {
   });
 
   describe("5- Testar aplicação com erro falta de dados", () => {
-    beforeEach(() => sinon.stub(Model, 'findOne').rejects(IToken as User));
+    beforeEach(() => sinon.stub(Model, 'findOne').rejects());
     afterEach(() => sinon.restore());
 
     it("5-1- Retorna um status 400 ao não digitar password", async () => {

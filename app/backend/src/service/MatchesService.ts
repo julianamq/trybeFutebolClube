@@ -36,4 +36,23 @@ export default class MatchesService {
     }
     return { type: 'success', message: getMatchById };
   }
+
+  static async getMatchByQueries(u: string) {
+    const inProgress = u === 'true';
+    if (typeof inProgress !== 'boolean') return { type: 'error', message: 'false' };
+    const getMatchByQuery = await Match.findAll({
+      where: { inProgress },
+      include: [
+        { model: Team,
+          as: 'homeTeam',
+          attributes: { exclude: ['id'] },
+        },
+        { model: Team,
+          as: 'awayTeam',
+          attributes: { exclude: ['id'] },
+        },
+      ],
+    });
+    return getMatchByQuery;
+  }
 }
