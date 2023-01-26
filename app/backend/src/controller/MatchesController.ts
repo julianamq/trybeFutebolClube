@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 import MatchesService from '../service/MatchesService';
 
@@ -20,5 +20,23 @@ export default class MatchController {
     }
     const get = await MatchesService.getMatchByQueries(inProgress);
     return res.status(200).json(get);
+  }
+
+  static async functionGetMatchByPost(req: Request, res: Response) {
+    const result = await MatchesService.functionGetMatchByPost(req.body);
+    if (result.type === 'error') {
+      return res.status(404).json({ message: result.message });
+    }
+    return res.status(201).json(result.message);
+  }
+
+  static async getFinish(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const message = await MatchesService.getFinish(+id);
+      return res.status(200).json({ message });
+    } catch (error) {
+      next(error);
+    }
   }
 }

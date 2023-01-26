@@ -1,5 +1,7 @@
+import { TypeMatchesWithTeams } from '../middelwares/types';
 import Match from '../database/models/MatchModel';
 import Team from '../database/models/TeamModels';
+import Declined from '../declined/declined';
 
 export default class MatchesService {
   static async getAll() {
@@ -54,5 +56,22 @@ export default class MatchesService {
       ],
     });
     return getMatchByQuery;
+  }
+
+  static async functionGetMatchByPost(body: TypeMatchesWithTeams) {
+    const { homeTeamId, awayTeamId } = body;
+    const homeTeam = await Match.findByPk(homeTeamId);
+    const awayTeam = await Match.findByPk(awayTeamId);
+    if (!homeTeam || !awayTeam) {
+      return { type: 'error', message: 'There is no team with such id!' };
+    }
+    const { dataValues } = await Match.create({ ...body, inProgress: true });
+    return { type: null, message: dataValues };
+  }
+
+  static async getFinish(id: number): Promise<string> {
+    const [qtdUpdated] = await Match.update({ inProgress: false }, { where: { id } });
+    if (qtdUpdated === 0) throw new Declined(400, 'Match does not exist');
+    return 'Finished';
   }
 }
