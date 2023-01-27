@@ -22,8 +22,8 @@ export default class MatchController {
     return res.status(200).json(get);
   }
 
-  static async functionGetMatchByPost(req: Request, res: Response) {
-    const result = await MatchesService.functionGetMatchByPost(req.body);
+  static async getMatchPost(req: Request, res: Response) {
+    const result = await MatchesService.getMatchPost(req.body);
     if (result.type === 'error') {
       return res.status(404).json({ message: result.message });
     }

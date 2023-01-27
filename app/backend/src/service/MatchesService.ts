@@ -74,7 +74,7 @@ export default class MatchesService {
     return getMatchByQuery;
   }
 
-  static async functionGetMatchByPost(body: TypeMatchesWithTeams) {
+  static async getMatchPost(body: TypeMatchesWithTeams) {
     const { homeTeamId, awayTeamId } = body;
     const homeTeam = await Match.findByPk(homeTeamId);
     const awayTeam = await Match.findByPk(awayTeamId);
@@ -87,7 +87,7 @@ export default class MatchesService {
 
   static async getFinish(id: number): Promise<string> {
     const [qtdUpdated] = await Match.update({ inProgress: false }, { where: { id } });
-    if (qtdUpdated === 0) throw new Declined(400, 'Match does not exist');
+    if (qtdUpdated === 0) throw new Declined(400, 'Match not found');
     return 'Finished';
   }
 }
