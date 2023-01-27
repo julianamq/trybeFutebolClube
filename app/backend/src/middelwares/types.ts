@@ -1,4 +1,4 @@
-export type TypeMatchesWithTeams = {
+export type MatchesAndTeams = {
   homeTeamId: number,
   awayTeamId: number,
   homeTeamGoals: number,

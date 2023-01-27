@@ -44,7 +44,7 @@ export default class MatchController {
     if (dataTeamsHome.message === 'Team not found' || dataTeamsAway.message === 'Team not found') {
       return res.status(404).json({ message: 'There is no team with such id!' });
     }
-    const { message } = await MatchesService.createMatches(data);
+    const { message } = await MatchesService.getMatchPost(data);
     return res.status(201).json(message);
   }
 
@@ -57,5 +57,15 @@ export default class MatchController {
     } catch (error) {
       next(error);
     }
+  }
+
+  // Laura
+  static async byUpdate(req: Request, res: Response) {
+    const { id } = req.params;
+    const result = await MatchesService.byUpdate(+id, req.body);
+    if (result.type === 'error') {
+      return res.status(400).json({ message: result.message });
+    }
+    return res.status(200).json({ message: result.message });
   }
 }

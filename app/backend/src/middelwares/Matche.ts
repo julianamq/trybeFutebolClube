@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-export default (req: Request, res: Response, next: NextFunction) => {
+export const validateEqual = (req: Request, res: Response, next: NextFunction) => {
   const { homeTeamId, awayTeamId } = req.body;
   if (+homeTeamId === +awayTeamId) {
     return res.status(422).json({
@@ -8,4 +8,16 @@ export default (req: Request, res: Response, next: NextFunction) => {
     });
   }
   next();
+};
+export const validateMatchesData = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+  if (!homeTeamId || !awayTeamId || !homeTeamGoals || !awayTeamGoals) {
+    return res.status(422)
+      .json({ message: 'It is not possible to create a match with empty fields' });
+  }
+  return next();
 };

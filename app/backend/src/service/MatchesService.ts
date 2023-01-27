@@ -1,5 +1,5 @@
 import { IMatch } from '../interfaces/InterfacesMatch';
-import { TypeMatchesWithTeams } from '../middelwares/types';
+import { MatchesAndTeams } from '../middelwares/types';
 import Match from '../database/models/MatchModel';
 import Team from '../database/models/TeamModels';
 import Declined from '../declined/declined';
@@ -74,7 +74,7 @@ export default class MatchesService {
     return getMatchByQuery;
   }
 
-  static async getMatchPost(body: TypeMatchesWithTeams) {
+  static async getMatchPost(body: MatchesAndTeams) {
     const { homeTeamId, awayTeamId } = body;
     const homeTeam = await Match.findByPk(homeTeamId);
     const awayTeam = await Match.findByPk(awayTeamId);
@@ -89,5 +89,13 @@ export default class MatchesService {
     const [qtdUpdated] = await Match.update({ inProgress: false }, { where: { id } });
     if (qtdUpdated === 0) throw new Declined(400, 'Match not found');
     return 'Finished';
+  }
+
+  static async byUpdate(id: number, body: MatchesAndTeams) {
+    const updatePatch = await Match.update({ ...body }, { where: { id } });
+    if (updatePatch[0] === 0) {
+      return { type: 'error', message: 'This match is already over' };
+    }
+    return { type: null, message: 'Updated' };
   }
 }
