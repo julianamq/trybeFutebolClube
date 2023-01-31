@@ -22,3 +22,18 @@ const { expect } = chai;describe('Testando buscas de times', () => {
       expect(status).to.equal(200);
     });
 });
+
+describe.skip("Testando Teams.", () => {
+
+  it.skip("Testa se recebe status 400", async () =>{
+    const resp = await chai.request(app).post('/teams');
+
+    expect(resp.status).to.equal(404);
+  });
+
+  it.skip("Testa se retorna uma mensagem de erro específica.", async () => {
+    const resp = await chai.request(app).post('/teams');
+
+    expect(resp.body).to.deep.equals('No teams found');
+  });
+});

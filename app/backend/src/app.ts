@@ -1,7 +1,8 @@
 import * as express from 'express';
-import LoginRouter from './LoginRouter';
-import TeamRouter from './TeamRouter';
-import MatchesRouter from './MatchesRouter';
+import LoginRouter from './Router/LoginRouter';
+import TeamRouter from './Router/TeamRouter';
+import MatchesRouter from './Router/MatchesRouter';
+import LeaderboardRoutes from './Router/LeaderboardRoutes';
 
 class App {
   public app: express.Express;
@@ -16,6 +17,7 @@ class App {
     this.app.use('/login', LoginRouter); // iniciando a 3
     this.app.use('/teams', TeamRouter); // iniciando a 15
     this.app.use('/matches', MatchesRouter); // iniciando a 19s
+    this.app.use('/leaderboard', LeaderboardRoutes); // iniciando a 29
   }
 
   private config():void {

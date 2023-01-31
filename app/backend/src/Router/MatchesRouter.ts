@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import MatchesController from './controller/MatchesController';
-import { validateEqual, validateMatchesData } from './middelwares/Matche';
+import MatchesController from '../controller/MatchesController';
+import { validateEqual, validateMatchesData } from '../middelwares/Matche';
 // import Matche from './middelwares/Matche';
-import validTokenMatch from './middelwares/validTokenMatch';
+import validTokenMatch from '../middelwares/validTokenMatch';
 
 const router = Router();
 router.get('/', MatchesController.getAllMatches);
