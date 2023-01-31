@@ -22,3 +22,5 @@ export const getTotalHomeLosses = (acc: number, curr: Match): number => {
 };
 export const getHomeGoals = (acc: number, curr: Match): number => acc + curr.homeTeamGoals;
 export const getAwaysGoals = (acc: number, curr: Match): number => acc + curr.awayTeamGoals;
+
+// teste
